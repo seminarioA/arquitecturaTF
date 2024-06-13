@@ -135,7 +135,7 @@ void mostrareEstadoPirLCD() {
     mostrarLCD1(0, 0, "Movimiento", true);
     mostrarLCD1(0, 1, "detectado!", false);
   } else {
-    mostrarLCD1(0, 0, "            ", true); // Limpiar pantalla si no hay movimiento
+    mostrarLCD1(0, 0, "", true); // Limpiar pantalla si no hay movimiento
   }
 }
 
