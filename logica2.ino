@@ -134,7 +134,7 @@ int lectura = analogRead(TEMP_PIN);
 }  
 
 void mostrarTemp(){
-  //FUNCION(ARRAY[OBJETO], COLUMNA, FILA, MENSAJE);
+  //FUNCION(ARRAY[OBJETO], COLUMNA, FILA, MENSAJE, LIMPIAR PANTALLA);
   mostrarLCD(*lcds[1], 0, 1, leerTemp());
   mostrarLCD(*lcds[1], 0, 1, " C");
   delay(100);
