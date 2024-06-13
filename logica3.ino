@@ -3,7 +3,7 @@
 #include <Keypad.h>
 #include <EEPROM.h>
 
-// Definiciones para el teclado 4x4
+// Teclado 4x4
 const byte filas = 4;
 const byte columnas = 4;
 byte pinesFilas[] = {13, 12, 11, 10};
@@ -73,7 +73,7 @@ void mostrarLCD2(int col, int row, const char* mensaje, bool limpiarPantalla) {
 void pantallaInicioLCDs() {
   mostrarLCD1(0, 0, "Bienvenid@", true);
   mostrarLCD2(0, 0, "Temp: ", true);
-  delay(2000);
+  millis(2000);
   mostrarLCD1(0, 0, "Ingrese clave:", true);
   mostrarLCD1(0, 1, " _ _ _ _", false);
 }
