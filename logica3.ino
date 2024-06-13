@@ -52,6 +52,7 @@ void loop() {
   estadoPirBUZZER();
 }
 
+//PANTALLA LCD
 void mostrarLCD1(int col, int row, const char* mensaje, bool limpiarPantalla) {
   lcd1.backlight();
   lcd1.setCursor(col, row);
@@ -78,18 +79,21 @@ void pantallaInicioLCDs() {
   mostrarLCD1(0, 1, " _ _ _ _", false);
 }
 
-void verificarTeclaPresionada() {
+//TECLAS
+void obtenerTeclaPresionada() {
   char tecla_presionada = tecladoUno.getKey();
-  
+
+  //SI UNA TECLA FUE PRESIONADA:
   if (tecla_presionada != NO_KEY) {
     Serial.print("Tecla: ");
     Serial.println(tecla_presionada);
-    
+  }
+
+    //SI EL INDICE DE LA CLAVE ES MENOR A 4:
     if (indiceClave < 4) {
       clave[indiceClave] = tecla_presionada;
       indiceClave++;
     }
-
     mostrarLCD1(0, 1, clave, false);
 
     if (indiceClave == 4) {
@@ -110,7 +114,9 @@ void verificarTeclaPresionada() {
     }
   }
 }
+//----------------------------------------------------
 
+//TEMPERATURA
 float leerTemp() {
   int lectura = analogRead(TEMP_PIN);
   float voltaje = lectura * 5.0 / 1024.0;
@@ -125,7 +131,9 @@ void mostrarTemp() {
   mostrarLCD2(12, 0, " C", false);
   delay(100);
 }
+//----------------------------------------------------
 
+//SENSOR PIR
 int estadoSensorPir() {
   return digitalRead(PIR_PIN);
 }
@@ -146,7 +154,9 @@ void estadoPirBUZZER() {
     digitalWrite(BUZZER_PIN, LOW); // Apagar buzzer si no hay movimiento
   }
 }
+//----------------------------------------------------
 
+//EEPROM
 bool verificarCodigoEEPROM(int direccion, const char* codigo) {
   for (int i = 0; i < 4; i++) {
     if (EEPROM.read(direccion + i) != codigo[i]) {
@@ -161,3 +171,4 @@ void guardarCodigo(int direccion, const char* codigo) {
     EEPROM.write(direccion + i, codigo[i]);
   }
 }
+//----------------------------------------------------
