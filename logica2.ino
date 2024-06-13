@@ -51,24 +51,26 @@ void loop() {
   
 }
 
-//MOSTRAR CONTENIDO EN LCD
-void mostrarLCD(LiquidCrystal_I2C &lcd, int col, int row, bool = true) {
+//MOSTRAR CONTENIDO EN LCDs
+//FUNCION(ARRAY[OBJETO], COLUMNA, FILA, MENSAJE, LIMPIAR PANTALLA);
+void mostrarLCD(LiquidCrystal_I2C &lcd, int col, int row, const char* mensaje, bool limpiarPantalla) {
   lcd.backlight();
   lcd.setCursor(col, row);
-  if (bool) {
+  if (limpiarPantalla) {
     lcd.clear();
   }
   lcd.print(mensaje);
 }
 
+
 //CONTENIDO DE INICIO LCDs
 void pantallaInicioLCDs() {
   //FUNCION(ARRAY[OBJETO], COLUMNA, FILA, MENSAJE, LIMPIAR PANTALLA);
-  mostrarLCD(*lcds[0], 0, 0, "Bienvenid@");
-  mostrarLCD(*lcds[1], 0, 0, "Temp: ");
+  mostrarLCD(*lcds[0], 0, 0, "Bienvenid@", true);
+  mostrarLCD(*lcds[1], 0, 0, "Temp: ", true);
   
   millis(2000);
-  mostrarLCD(*lcds[0], 0, 0, "Ingrese clave:");
+  mostrarLCD(*lcds[0], 0, 0, "Ingrese clave:", true);
   mostrarLCD(*lcds[0], 0, 1, " _ _ _ _", false);
 }
 
