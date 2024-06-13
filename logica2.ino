@@ -1,9 +1,10 @@
+//INCLUIR BIBLIOTECAS
 #include <Keypad.h>
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 #include <EEPROM.h>
 
-// Definición de pines y configuración del teclado 4x4
+//TECLADO 4X4
 const byte filas = 4; 
 const byte columnas = 4;
 byte pinesFilas[]  = {13, 12, 11, 10};
@@ -16,9 +17,9 @@ char teclas[4][4] = {
 };
 Keypad tecladoUno = Keypad(makeKeymap(teclas), pinesFilas, pinesColumnas, filas, columnas);
 
-// Configuración de los LCDs
-LiquidCrystal_I2C lcd1(0x20, 16, 2); // Direccion I2C del primer LCD
-LiquidCrystal_I2C lcd2(0x22, 16, 2); // Direccion I2C del segundo LCD (Asegúrate de que las direcciones I2C son correctas y diferentes)
+//PANTALLAS LCDs
+LiquidCrystal_I2C lcd1(0x20, 16, 2);
+LiquidCrystal_I2C lcd2(0x22, 16, 2);
 
 // Pines del LED, sensor PIR, buzzer y sensor de temperatura TMP36
 #define LED_PIN 5
@@ -30,6 +31,12 @@ LiquidCrystal_I2C lcd2(0x22, 16, 2); // Direccion I2C del segundo LCD (Asegúrat
 char clave[5] = "____";
 int indiceClave = 0;
 
+void inicializarPines() {
+  pinMode(LED_PIN, OUTPUT);
+  pinMode(PIR_PIN, INPUT);
+  pinMode(BUZZER_PIN, OUTPUT);
+}
+
 void setup() {
   Serial.begin(9600);
   lcd1.init();
@@ -37,7 +44,6 @@ void setup() {
   guardarCodigo(5, "5678");
   inicializarLCDs();
   inicializarPines();
-  
 }
 
 void loop() {
@@ -47,11 +53,9 @@ void loop() {
   pantallaInicioLCDs();
 }
 
-LiquidCrystal_I2C lcd1(0x20, 16, 2);
-LiquidCrystal_I2C lcd2(0x22, 16, 2);
-
 LiquidCrystal_I2C* lcds[] = {&lcd1, &lcd2};
 
+//MOSTRAR CONTENIDO EN LCD
 void mostrarLCD(LiquidCrystal_I2C &lcd, int col, int row, bool = true) {
   lcd.backlight();
   lcd.setCursor(col, row);
@@ -61,6 +65,7 @@ void mostrarLCD(LiquidCrystal_I2C &lcd, int col, int row, bool = true) {
   lcd.print(mensaje);
 }
 
+//CONTENIDO DE INICIO LCDs
 void pantallaInicioLCDs() {
   //FUNCION(ARRAY[OBJETO], COLUMNA, FILA, MENSAJE);
   mostrarLCD(*lcds[0], 0, 0, "Bienvenid@");
@@ -70,16 +75,6 @@ void pantallaInicioLCDs() {
   mostrarLCD(*lcds[0], 0, 0, "Ingrese clave:");
   mostrarLCD(*lcds[0], 0, 1, " _ _ _ _", false);
 }
-
-
-
-void inicializarPines() {
-  pinMode(LED_PIN, OUTPUT);
-  pinMode(PIR_PIN, INPUT);
-  pinMode(BUZZER_PIN, OUTPUT);
-}
-
-
 
 
 void verificarTeclaPresionada() {
@@ -144,21 +139,29 @@ void mostrarTemp(){
   delay(100);
 }
 
-void verificarSensorPIR() {
+int estadoSensorPir(){
   int pirState = digitalRead(PIR_PIN);
-  if (pirState == HIGH) {
-    digitalWrite(LED_PIN, HIGH); // Enciende el LED
-    lcd1.clear();
-    lcd1.setCursor(0, 0);
-    lcd1.print("Movimiento");
-    lcd1.setCursor(0, 1);
-    lcd1.print("detectado!");
-    digitalWrite(BUZZER_PIN, HIGH); // Enciende el buzzer
-  } else {
-    digitalWrite(LED_PIN, LOW); // Apaga el LED
-    digitalWrite(BUZZER_PIN, LOW); // Apaga el buzzer
+  return pirState   
+}
+
+void estadoPirLCD(){
+  if(estadoSensorPir()){
+    //FUNCION(ARRAY[OBJETO], COLUMNA, FILA, MENSAJE, LIMPIAR PANTALLA);
+    mostrarLCD(*lcds[0], 0, 0, "Movimiento");
+    mostrarLCD(*lcds[0], 0, 1, "detectado!", false);
   }
 }
+
+void estadoPirBUZZER(){
+  if (estadoSensorPir) {
+    digitalWrite(BUZZER_PIN, HIGH);
+  } else {
+    digitalWrite(LED_PIN, LOW);
+    digitalWrite(BUZZER_PIN, LOW);
+  }
+}
+
+
 
 bool verificarCodigoEEPROM(int direccion, const char* codigo) {
   for (int i = 0; i < 4; i++) {
