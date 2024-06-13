@@ -20,6 +20,7 @@ Keypad tecladoUno = Keypad(makeKeymap(teclas), pinesFilas, pinesColumnas, filas,
 //PANTALLAS LCDs
 LiquidCrystal_I2C lcd1(0x20, 16, 2);
 LiquidCrystal_I2C lcd2(0x22, 16, 2);
+LiquidCrystal_I2C* lcds[] = {&lcd1, &lcd2};
 
 // Pines del LED, sensor PIR, buzzer y sensor de temperatura TMP36
 #define LED_PIN 5
@@ -52,8 +53,6 @@ void loop() {
   verificarSensorPIR();
   pantallaInicioLCDs();
 }
-
-LiquidCrystal_I2C* lcds[] = {&lcd1, &lcd2};
 
 //MOSTRAR CONTENIDO EN LCD
 void mostrarLCD(LiquidCrystal_I2C &lcd, int col, int row, bool = true) {
@@ -125,6 +124,8 @@ void verificarTeclaPresionada() {
 }
 
 
+//-----------------------------------------------------
+//TEMPERATURA
 float leerTemp (){
 int lectura = analogRead(TEMP_PIN);
   float voltaje = lectura * 5.0 / 1024.0;
@@ -139,6 +140,8 @@ void mostrarTemp(){
   delay(100);
 }
 
+//-----------------------------------------------------
+//SENSOR PIR
 int estadoSensorPir(){
   int pirState = digitalRead(PIR_PIN);
   return pirState   
@@ -160,6 +163,7 @@ void estadoPirBUZZER(){
     digitalWrite(BUZZER_PIN, LOW);
   }
 }
+//-----------------------------------------------------
 
 
 
