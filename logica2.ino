@@ -48,6 +48,7 @@ void setup() {
 }
 
 void loop() {
+  pantallaInicioLCDs();
   
 }
 
@@ -89,16 +90,14 @@ void verificarTeclaPresionada() {
 
     lcd1.setCursor(0, 1);
     for (int i = 0; i < 4; i++) {
-      lcd1.print(clave[i]);
-      lcd1.print(' ');
+        mostrarLCD(*lcds[0], 0, 0, clave[i], false);
+        mostrarLCD(*lcds[0], 0, 0, ' ', false);
     }
     if (indiceClave == 4) {
       // Verificar código
       if (verificarCodigoEEPROM(0, clave) || verificarCodigoEEPROM(5, clave)) {
         //FUNCION(ARRAY[OBJETO], COLUMNA, FILA, MENSAJE);
-        mostrarLCD(*lcds[0], 0, 0, "Codigo valido  ");
-        Serial.println("Código válido");
-        
+        mostrarLCD(*lcds[0], 0, 0, "Codigo valido  ");        
         // Mensaje de código válido
         // Aquí mecanismo de apertura de la puerta
         digitalWrite(LED_PIN, HIGH);
