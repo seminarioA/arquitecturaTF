@@ -126,6 +126,9 @@ float leerTemp() {
 
 void mostrarTemp() {
   char buffer[6];
+  //dtostrf convierte float a String
+  //dtostrf(variable, enteros, decimales, tempF);
+
   dtostrf(leerTemp(), 5, 1, buffer);
   mostrarLCD2(6, 0, buffer, true);
   mostrarLCD2(12, 0, " C", false);
