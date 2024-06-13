@@ -48,10 +48,7 @@ void setup() {
 }
 
 void loop() {
-  verificarTeclaPresionada();
-  mostrarTemperatura();
-  verificarSensorPIR();
-  pantallaInicioLCDs();
+  
 }
 
 //MOSTRAR CONTENIDO EN LCD
@@ -66,7 +63,7 @@ void mostrarLCD(LiquidCrystal_I2C &lcd, int col, int row, bool = true) {
 
 //CONTENIDO DE INICIO LCDs
 void pantallaInicioLCDs() {
-  //FUNCION(ARRAY[OBJETO], COLUMNA, FILA, MENSAJE);
+  //FUNCION(ARRAY[OBJETO], COLUMNA, FILA, MENSAJE, LIMPIAR PANTALLA);
   mostrarLCD(*lcds[0], 0, 0, "Bienvenid@");
   mostrarLCD(*lcds[1], 0, 0, "Temp: ");
   
@@ -96,10 +93,9 @@ void verificarTeclaPresionada() {
     if (indiceClave == 4) {
       // Verificar código
       if (verificarCodigoEEPROM(0, clave) || verificarCodigoEEPROM(5, clave)) {
-        lcd1.clear();
+        //FUNCION(ARRAY[OBJETO], COLUMNA, FILA, MENSAJE);
+        mostrarLCD(*lcds[0], 0, 0, "Codigo valido  ");
         Serial.println("Código válido");
-        lcd1.setCursor(0, 0);
-        lcd1.print("Codigo valido  ");  
         
         // Mensaje de código válido
         // Aquí mecanismo de apertura de la puerta
@@ -163,9 +159,8 @@ void estadoPirBUZZER(){
     digitalWrite(BUZZER_PIN, LOW);
   }
 }
+
 //-----------------------------------------------------
-
-
 
 bool verificarCodigoEEPROM(int direccion, const char* codigo) {
   for (int i = 0; i < 4; i++) {
