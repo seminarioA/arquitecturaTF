@@ -147,7 +147,7 @@ int estadoSensorPir(){
   return pirState   
 }
 
-void estadoPirLCD(){
+void mostrareEstadoPirLCD(){
   if(estadoSensorPir()){
     //FUNCION(ARRAY[OBJETO], COLUMNA, FILA, MENSAJE, LIMPIAR PANTALLA);
     mostrarLCD(*lcds[0], 0, 0, "Movimiento");
