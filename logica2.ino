@@ -53,7 +53,6 @@ LiquidCrystal_I2C lcd2(0x22, 16, 2);
 LiquidCrystal_I2C* lcds[] = {&lcd1, &lcd2};
 
 void mostrarLCD(LiquidCrystal_I2C &lcd, int col, int row, bool = true) {
-  lcd.init();
   lcd.backlight();
   lcd.setCursor(col, row);
   if (bool) {
@@ -71,8 +70,6 @@ void pantallaInicioLCDs() {
   mostrarLCD(*lcds[0], 0, 0, "Ingrese clave:");
   mostrarLCD(*lcds[0], 0, 1, " _ _ _ _", false);
 }
-
-
 
 
 
