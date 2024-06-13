@@ -63,23 +63,28 @@ void pantallaInicioLCDs() {
   mostrarLCD1(0, 1, " _ _ _ _", false);
 }
 
+
+int pin = 4444;
+
+void presionarTecla(){
+  if (char(tecladoUno.getKey()) != NO_KEY) {
+    return true; 
+}
+
 //TECLAS
+
+//¿EXISTE UN PIN??????
+  //NO, CREE UN PIN
+  //SI, INGRESE UN PIN
 void obtenerTeclaPresionada() {
   char tecla_presionada = tecladoUno.getKey();
-
-  //SI UNA TECLA FUE PRESIONADA:
-  if (tecla_presionada != NO_KEY) {
-    Serial.print("Tecla: ");
-    Serial.println(tecla_presionada);
-  }
-
-    //SI EL INDICE DE LA CLAVE ES MENOR A 4:
-    if (indiceClave < 4) {
+  //SI UNA TECLA FUE PRESIONADA Y EL TAMAÑO ES MENOR A 4
+  if (tecla_presionada != NO_KEY && indiceClave < 4) {
       clave[indiceClave] = tecla_presionada;
-      indiceClave++;
+      indiceClave++;   //CONTADOR
     }
     mostrarLCD1(0, 1, clave, false);
-
+  
     if (indiceClave == 4) {
       // Verificar código
       if (verificarCodigoEEPROM(0, clave) || verificarCodigoEEPROM(5, clave)) {
