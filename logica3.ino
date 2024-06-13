@@ -27,7 +27,7 @@ LiquidCrystal_I2C lcd2(0x22, 16, 2);
 #define TEMP_PIN A0
 
 // Almacenamiento de la clave ingresada
-char clave[5] = "____";
+char clave[5] = "_____";
 int indiceClave = 0;
 
 void inicializarPines() {
