@@ -73,7 +73,7 @@ void mostrarLCD2(int col, int row, const char* mensaje, bool limpiarPantalla) {
 void pantallaInicioLCDs() {
   mostrarLCD1(0, 0, "Bienvenid@", true);
   mostrarLCD2(0, 0, "Temp: ", true);
-  millis(2000);
+  delay(2000);
   mostrarLCD1(0, 0, "Ingrese clave:", true);
   mostrarLCD1(0, 1, " _ _ _ _", false);
 }
