@@ -36,22 +36,6 @@ void inicializarPines() {
   pinMode(BUZZER_PIN, OUTPUT);
 }
 
-void setup() {
-  Serial.begin(9600);
-  lcd1.init();
-  lcd2.init();
-  guardarCodigo(0, "5678"); // Ejemplo de guardar un código en la dirección 0 de EEPROM
-  guardarCodigo(5, "1234"); // Ejemplo de guardar otro código en la dirección 5 de EEPROM
-  inicializarPines();
-}
-
-void loop() {
-  verificarTeclaPresionada();
-  mostrarTemp();
-  mostrareEstadoPirLCD();
-  estadoPirBUZZER();
-}
-
 //PANTALLA LCD
 void mostrarLCD1(int col, int row, const char* mensaje, bool limpiarPantalla) {
   lcd1.backlight();
@@ -136,7 +120,7 @@ int estadoSensorPir() {
   return digitalRead(PIR_PIN);
 }
 
-void mostrareEstadoPirLCD() {
+void mostrarEstadoPirLCD() {
   if (estadoSensorPir()) {
     mostrarLCD1(0, 0, "Movimiento", true);
     mostrarLCD1(0, 1, "detectado!", false);
@@ -170,3 +154,19 @@ void guardarCodigo(int direccion, const char* codigo) {
   }
 }
 //----------------------------------------------------
+
+void setup() {
+  Serial.begin(9600);
+  lcd1.init();
+  lcd2.init();
+  guardarCodigo(0, "5678"); // Ejemplo de guardar un código en la dirección 0 de EEPROM
+  guardarCodigo(5, "1234"); // Ejemplo de guardar otro código en la dirección 5 de EEPROM
+  inicializarPines();
+}
+
+void loop() {
+  verificarTeclaPresionada();
+  mostrarTemp();
+  mostrarEstadoPirLCD();
+  estadoPirBUZZER();
+}
