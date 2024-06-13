@@ -32,6 +32,8 @@ int indiceClave = 0;
 
 void setup() {
   Serial.begin(9600);
+  lcd1.init();
+  lcd2.init();
   guardarCodigo(5, "5678");
   inicializarLCDs();
   inicializarPines();
